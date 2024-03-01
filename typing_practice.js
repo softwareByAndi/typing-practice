@@ -13,7 +13,6 @@ const g_timeDiffs = []
 
 const NUM_CHARS_PER_WORD = 5
 const RUNNING_AVG_WINDOW_SIZE = 10
-const MODULUS_FACTOR = 1000000 // 1_000_000
 
 const ALPHABET_LOWERCASE = 'abcdefghijklmnopqrstuvwxyz'
 const ALPHABET = ALPHABET_LOWERCASE + ALPHABET_LOWERCASE.toUpperCase()
