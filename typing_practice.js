@@ -84,7 +84,11 @@ function print_header() {
     const diff_length = g_timeDiffs.length
     if (diff_length) {
         const window_start = Math.max(0, diff_length - RUNNING_AVG_WINDOW_SIZE)
-        const avg_time_ms = g_timeDiffs.slice(window_start).reduce((a, b) => a + b) / (diff_length - window_start)
+        const avg_time_ms = (
+            g_timeDiffs
+                .slice(window_start)
+                .reduce((a, b) => a + b)
+        ) / (diff_length - window_start)
         avg_time_s = avg_time_ms / MS_IN_SEC
         current_time_s = g_timeDiffs[g_timeDiffs.length - 1] / MS_IN_SEC
         avg_wpm = SEC_IN_MIN / (avg_time_s * NUM_CHARS_PER_WORD)
@@ -108,7 +112,7 @@ function readKey() {
                 key = 'Enter';
             } else if (key === '\u001b') {
                 key = 'Escape';
-            } else if (key === ' ') { // Space
+            } else if (key === ' ' || key === '\t') { // Space
                 key = 'Space';
             } else if (key === '\x7f' || key === '\b') { // Backspace (might vary based on system)
                 // Clear the line and return the cursor to the beginning of the line
