@@ -66,11 +66,15 @@ function shuffle() {
 
 function update_time_diffs() {
     const currentTime = Date.now();
+    let diff = currentTime
     if (g_inputTimestamps.length > 0) {
         const prevTime = g_inputTimestamps[g_inputTimestamps.length - 1]
-        g_timeDiffs.push(currentTime - prevTime)
+        diff = currentTime - prevTime
     }
-    g_inputTimestamps.push(currentTime)
+    if (g_inputTimestamps.length === RUNNING_AVG_WINDOW_SIZE) {
+        g_timeDiffs.shift()
+    }
+    g_inputTimestamps.push(diff)
 }
 
 function print_header() {
