@@ -8,7 +8,7 @@ const readline = require('readline');
  */
 let character_queue = []
 let current_round = 0
-const g_inputTimestamps = []
+let g_prev_timestamp = 0
 const g_timeDiffs = []
 
 const NUM_CHARS_PER_WORD = 5
@@ -66,15 +66,16 @@ function shuffle() {
 
 function update_time_diffs() {
     const currentTime = Date.now();
-    let diff = currentTime
-    if (g_inputTimestamps.length > 0) {
-        const prevTime = g_inputTimestamps[g_inputTimestamps.length - 1]
-        diff = currentTime - prevTime
-    }
-    if (g_inputTimestamps.length === RUNNING_AVG_WINDOW_SIZE) {
+   
+    if (g_timeDiffs.length === RUNNING_AVG_WINDOW_SIZE) {
         g_timeDiffs.shift()
     }
-    g_inputTimestamps.push(diff)
+    if (g_prev_timestamp !== 0) {
+        let diff = currentTime - g_prev_timestamp
+        g_timeDiffs.push(diff)
+    }
+    g_prev_timestamp = currentTime
+
 }
 
 function print_header() {
@@ -85,15 +86,11 @@ function print_header() {
     let avg_wpm = 0
     let current_wpm = 0
     const diff_length = g_timeDiffs.length
+    print('test: ', g_timeDiffs.length, g_timeDiffs)
     if (diff_length) {
-        const window_start = Math.max(0, diff_length - RUNNING_AVG_WINDOW_SIZE)
-        const avg_time_ms = (
-            g_timeDiffs
-                .slice(window_start)
-                .reduce((a, b) => a + b)
-        ) / (diff_length - window_start)
+        const avg_time_ms = g_timeDiffs.reduce((a, b) => a + b) / diff_length
         avg_time_s = avg_time_ms / MS_IN_SEC
-        current_time_s = g_timeDiffs[g_timeDiffs.length - 1] / MS_IN_SEC
+        current_time_s = g_timeDiffs[diff_length - 1] / MS_IN_SEC
         avg_wpm = SEC_IN_MIN / (avg_time_s * NUM_CHARS_PER_WORD)
         current_wpm = SEC_IN_MIN / (current_time_s * NUM_CHARS_PER_WORD)
     }
