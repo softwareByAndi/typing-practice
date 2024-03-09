@@ -50,7 +50,17 @@ source ~/.bashrc
 
 # TODO
 
-1. maybe add some in sight logging to track performance over time.
+1. add accuracy measures and features to target difficult characters. 
+    - characters that are commonly mistyped
+    - characters that take longer to type
+2. save accuracy and targeting data to a persistent file, to improve, capture and update across sessions.
+    - number of mistypes for each character
+    - list of times taken to type each character
+    1. what about 
+3. add a mode to practice targeted characters 
+
+
+4. maybe add some insight logging to track performance over time.
     - what about a scoreboard? Competing against past performances.
     - maybe add some some average tracking across rounds.
 
