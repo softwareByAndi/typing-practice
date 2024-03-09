@@ -114,11 +114,13 @@ function readKey() {
                 key = 'Escape';
             } else if (key === ' ' || key === '\t') { // Space
                 key = 'Space';
-            } else if (key === '\x7f' || key === '\b') { // Backspace (might vary based on system)
+            } else if (key === '\x7f' || key === '^[[3~' || key === '\b') { // Backspace (might vary based on system)
                 // Clear the line and return the cursor to the beginning of the line
                 clear_below_line(7)
                 key = 'Backspace';
-            }
+            } else if (key.includes('^[[')) { // terminal escaped sequences
+                key = 'Terminal Escaped'; // e.g. arrow keys
+            } 
             resolve({
                 key
             })
