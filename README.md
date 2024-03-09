@@ -56,7 +56,7 @@ source ~/.bashrc
 2. save accuracy and targeting data to a persistent file, to improve, capture and update across sessions.
     - number of mistypes for each character
     - list of times taken to type each character
-    1. what about 
+    1. what about character sequencing stats? - e.g. ^~ could be identified as a slow combination
 3. add a mode to practice targeted characters 
 
 
